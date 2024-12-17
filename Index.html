@@ -1,1 +1,230 @@
 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Products Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+        }
+
+        header .cart button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        header .cart button:hover {
+            background-color: #0056b3;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .products {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .product {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .product button:hover {
+            background-color: #218838;
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .cart-modal-content {
+            background-color: white;
+            margin: 100px auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-modal-content ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .cart-modal-content button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .cart-modal-content button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">My Digital Store</div>
+        <div class="cart">
+            <button onclick="viewCart()">Cart (0)</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="products">
+            <div class="product">
+                <img src="product1.jpg" alt="Product 1">
+                <h3>Product 1</h3>
+                <p>$10</p>
+                <button onclick="addToCart('Product 1', 10)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="product2.jpg" alt="Product 2">
+                <h3>Product 2</h3>
+                <p>$15</p>
+                <button onclick="addToCart('Product 2', 15)">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="product3.jpg" alt="Product 3">
+                <h3>Product 3</h3>
+                <p>$20</p>
+                <button onclick="addToCart('Product 3', 20)">Add to Cart</button>
+            </div>
+        </section>
+
+        <section id="cart-modal" class="cart-modal">
+            <div class="cart-modal-content">
+                <h2>Your Cart</h2>
+                <ul id="cart-items"></ul>
+                <p>Total: $<span id="total-price">0</span></p>
+                <button onclick="checkout()">Proceed to Checkout</button>
+                <button onclick="closeCart()">Close</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Digital Store. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            total += price;
+            updateCartButton();
+        }
+
+        function updateCartButton() {
+            const cartButton = document.querySelector(".cart button");
+            cartButton.textContent = `Cart (${cart.length})`;
+        }
+
+        function viewCart() {
+            const cartModal = document.getElementById("cart-modal");
+            const cartItemsList = document.getElementById("cart-items");
+            const totalPrice = document.getElementById("total-price");
+
+            cartItemsList.innerHTML = '';
+            cart.forEach(item => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${item.name} - $${item.price}`;
+                cartItemsList.appendChild(listItem);
+            });
+
+            totalPrice.textContent = total;
+
+            cartModal.style.display = "block";
+        }
+
+        function closeCart() {
+            const cartModal = document.getElementById("cart-modal");
+            cartModal.style.display = "none";
+        }
+
+        function checkout() {
+            alert("Proceeding to Checkout!");
+            // You can integrate payment APIs here, like Stripe or PayPal
+            closeCart();
+        }
+    </script>
+</body>
+</html>
+
+
+---
+
+Code Explanation:
+
+HTML: Basic structure of the page, which includes a header (with logo and cart), a section displaying products, and a footer.
+
+CSS: Styles to give the page a modern look with a clean layout. It includes styling for the header, products, cart modal, and buttons.
+
+JavaScript:
+
+addToCart(): Adds products to the cart and updates the cart button with the current number of items.
+
+viewCart(): Displays the cart modal with all items and total price.
+
+closeCart(): Closes the cart modal.
+
+checkout(): Placeholder function to proceed with checkout (you can later integrate a payment gateway here).
+
+
